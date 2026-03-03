@@ -11,6 +11,8 @@ Additional docs:
 - [docs/ELK_SETUP_EN.md](docs/ELK_SETUP_EN.md) - ELK startup and integration guide (EN)
 - [docs/OPENSEARCH_SETUP_PL.md](docs/OPENSEARCH_SETUP_PL.md) - uruchomienie i integracja OpenSearch (PL)
 - [docs/OPENSEARCH_SETUP_EN.md](docs/OPENSEARCH_SETUP_EN.md) - OpenSearch startup and integration guide (EN)
+- [docs/HARDENED_RUNTIME_PL.md](docs/HARDENED_RUNTIME_PL.md) - uruchomienie parsedmarc w trybie hardened (PL)
+- [docs/HARDENED_RUNTIME_EN.md](docs/HARDENED_RUNTIME_EN.md) - run parsedmarc in hardened mode (EN)
 
 ## :rocket: Quick Start (MS Graph token refresh)
 1. Prepare env:
