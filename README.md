@@ -5,6 +5,39 @@ This stack includes:
 - [Elasticsearch & Kibana](https://www.elastic.co/guide/index.html) to store and visualize parsed data
 - [Nginx](https://docs.nginx.com/) to handle basic authorization and SSL offloading
 
+Additional docs:
+- [MSGRAPH_TOKEN_SETUP.md](MSGRAPH_TOKEN_SETUP.md) - configuration of MS Graph token refresh using `client secret` and `certificate`
+
+## :rocket: Quick Start (MS Graph token refresh)
+1. Prepare env:
+```bash
+cp .env.example .env
+```
+2. Fill `.env` (`TENANT_ID`, `CLIENT_ID`; for certificate also `MSGRAPH_CERT_THUMBPRINT`).
+3. Start parsedmarc:
+```bash
+sudo docker compose up -d parsedmarc
+```
+
+### Variant A: client secret
+```bash
+printf '%s' 'TU_WKLEJ_CLIENT_SECRET' > secrets/msgraph_client_secret.txt
+chmod 600 secrets/msgraph_client_secret.txt
+sudo docker compose --profile msgraph-secret up -d --build msgraph-token-refresh-secret
+```
+
+### Variant B: certificate
+```bash
+chmod 600 secrets/msgraph_client_certificate.pem
+chmod 644 secrets/msgraph_client_certificate_public.pem
+sudo docker compose --profile msgraph-cert up -d --build msgraph-token-refresh-cert
+```
+
+Token output file (both variants):
+```bash
+sudo docker compose exec msgraph-token-refresh-secret sh -c 'ls -l /tokens/.token.json && tail -n +1 /tokens/.token.json'
+```
+
 ## :shield: Security note
 Please note that the Fail2Ban technique is not implemented, so posting this project on the Internet :globe_with_meridians: can be risky. 
 
