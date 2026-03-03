@@ -1,0 +1,82 @@
+services:
+  opensearch:
+    container_name: opensearch
+    image: opensearchproject/opensearch:2.15.0
+    restart: unless-stopped
+    environment:
+      - node.name=opensearch-node1
+      - cluster.name=parsedmarc-opensearch
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g
+      - DISABLE_INSTALL_DEMO_CONFIG=true
+      - DISABLE_SECURITY_PLUGIN=true
+      - plugins.security.disabled=true
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - opensearch_data:/usr/share/opensearch/data
+    ports:
+      - "9200:9200"
+      - "9600:9600"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://localhost:9200 >/dev/null || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 20
+      start_period: 30s
+    networks:
+      elasticsearch:
+        aliases:
+          - es01
+
+  opensearch-dashboards:
+    container_name: opensearch-dashboards
+    image: opensearchproject/opensearch-dashboards:2.15.0
+    restart: unless-stopped
+    depends_on:
+      opensearch:
+        condition: service_healthy
+    environment:
+      OPENSEARCH_HOSTS: '["http://opensearch:9200"]'
+      DISABLE_SECURITY_DASHBOARDS_PLUGIN: "true"
+    ports:
+      - "5601:5601"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s -I http://localhost:5601 | grep -q 'HTTP/' || exit 1"]
+      interval: 20s
+      timeout: 10s
+      retries: 20
+      start_period: 40s
+    networks:
+      elasticsearch:
+        aliases:
+          - kibana
+
+  nginx:
+    profiles: ["nginx"]
+    container_name: opensearch-nginx
+    image: nginx:alpine
+    restart: unless-stopped
+    depends_on:
+      opensearch-dashboards:
+        condition: service_healthy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - ./nginx/htpasswd:/etc/nginx/htpasswd:ro
+    networks:
+      - elasticsearch
+
+networks:
+  elasticsearch:
+    name: elasticsearch_elastic
+    driver: bridge
+
+volumes:
+  opensearch_data:
