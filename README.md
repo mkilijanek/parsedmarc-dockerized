@@ -7,6 +7,8 @@ This stack includes:
 
 Additional docs:
 - [MSGRAPH_TOKEN_SETUP.md](MSGRAPH_TOKEN_SETUP.md) - configuration of MS Graph token refresh using `client secret` and `certificate`
+- [docs/ELK_SETUP_PL.md](docs/ELK_SETUP_PL.md) - uruchomienie i integracja ELK (PL)
+- [docs/ELK_SETUP_EN.md](docs/ELK_SETUP_EN.md) - ELK startup and integration guide (EN)
 
 ## :rocket: Quick Start (MS Graph token refresh)
 1. Prepare env:
