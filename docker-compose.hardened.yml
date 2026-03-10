@@ -4,7 +4,7 @@ services:
       context: ./parsedmarc
       dockerfile: Dockerfile.hardened
       args:
-        PARSEDMARC_VERSION: ${PARSEDMARC_VERSION:-9.1.0}
+        PARSEDMARC_VERSION: ${PARSEDMARC_VERSION:-9.2.0}
     image: parsedmarc:hardened
     read_only: true
     tmpfs:
