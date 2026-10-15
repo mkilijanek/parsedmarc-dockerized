@@ -9,7 +9,7 @@ Stack tworzy sieć `elasticsearch_elastic`, do której podłącza się `parsedma
 - opcjonalnie `nginx` (profil `nginx`, porty `80` i `443`)
 
 ## Wymagane ustawienia
-Ustaw w `.env` zmienne `KIBANA_ENCRYPTEDSAVEDOBJECTS_KEY`, `KIBANA_REPORTING_KEY` i `KIBANA_SECURITY_KEY` (każda min. 32 losowe znaki, np. `openssl rand -hex 32`). Bez nich compose nie uruchomi Kibany. Przy aktualizacji istniejącego stacku ustaw poprzednie, zahardkodowane wartości, aby zachować odczyt zaszyfrowanych saved objects, a potem zaplanuj rotację.
+Ustaw w `.env` zmienne `KIBANA_ENCRYPTEDSAVEDOBJECTS_KEY`, `KIBANA_REPORTING_KEY` i `KIBANA_SECURITY_KEY` (każda min. 32 losowe znaki, np. `openssl rand -hex 32`). Bez nich compose nie uruchomi całego stacku. Przy aktualizacji istniejącego stacku ustaw poprzednie, zahardkodowane wartości, aby zachować odczyt zaszyfrowanych saved objects, a potem zaplanuj rotację.
 
 Elasticsearch i Kibana działają bez uwierzytelniania, więc ich porty są wystawione tylko na `127.0.0.1`. Dostęp zdalny: profil `nginx` (basic auth + TLS) albo świadome ustawienie `ES_BIND_ADDRESS` / `KIBANA_BIND_ADDRESS`.
 
