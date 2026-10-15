@@ -3,3 +3,6 @@ secrets/*
 !secrets/.gitkeep
 logs/*
 !logs/.gitkeep
+nginx/htpasswd
+nginx/ssl/*
+!nginx/ssl/.gitkeep

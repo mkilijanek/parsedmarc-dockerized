@@ -95,8 +95,13 @@ Syntax and description avaible [here](https://domainaware.github.io/parsedmarc/i
 [imap]
 host = imap.example.com
 user = parsedmarc@example.com
-password = somepassword
 ```
+
+Keep the password out of `parsedmarc.ini`, which is tracked in git. Put it in `.env` (gitignored) instead, and `docker-compose.yml` passes it to the container:
+```
+PARSEDMARC_IMAP_PASSWORD=somepassword
+```
+`.env.example` lists the other supported secrets (Elasticsearch, OpenSearch, Microsoft Graph).
 
 4. Enable IP geolocation by installing [GeoIP Update software](https://github.com/maxmind/geoipupdate). And edit `docker-compose.yml` to enable access to the MaxMind databases on your host system.
 ```
@@ -113,7 +118,7 @@ dnf install -y httpd-tools
 htpasswd -c nginx/htpasswd anyusername
 ```
 
-6. Generate & put your SSL keypair `kibana.crt` and `kibana.key` to `nginx/ssl` folder.
+6. Generate & put your SSL keypair `kibana.crt` and `kibana.key` to `nginx/ssl` folder. Everything in `nginx/ssl/` and `nginx/htpasswd` is gitignored, so the key and the password hashes cannot be committed by accident.
 
 There are to many posible solutuins like [Let's Encrypt](https://letsencrypt.org/docs/client-options/), private PKI or [self-hosted](https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-16-04) certificates.
 

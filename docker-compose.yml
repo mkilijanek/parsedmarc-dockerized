@@ -4,6 +4,14 @@ services:
     image: ghcr.io/mkilijanek/parsedmarc:latest
     restart: unless-stopped
     command: ["-c", "/etc/parsedmarc.ini"]
+    # Secrets from .env, passed through only when set; they override parsedmarc.ini.
+    environment:
+      - PARSEDMARC_IMAP_PASSWORD
+      - PARSEDMARC_ELASTICSEARCH_PASSWORD
+      - PARSEDMARC_ELASTICSEARCH_API_KEY
+      - PARSEDMARC_OPENSEARCH_PASSWORD
+      - PARSEDMARC_MSGRAPH_PASSWORD
+      - PARSEDMARC_MSGRAPH_CLIENT_SECRET
     volumes:
       - ./parsedmarc/parsedmarc.ini:/etc/parsedmarc.ini:ro
       - ./logs:/var/log/parsedmarc
