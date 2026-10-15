@@ -4,8 +4,8 @@ Ten dokument opisuje uruchomienie lokalnego stacka OpenSearch z pliku `docker-co
 Stack tworzy sieć `elasticsearch_elastic`, do której podłącza się `parsedmarc` z głównego `docker-compose.yml`.
 
 ## Co uruchamia `docker-compose-opensearch.yml`
-- `opensearch` (porty `9200` i `9600`)
-- `opensearch-dashboards` (port `5601`)
+- `opensearch` (porty `9200` i `9600`, wystawione tylko na `127.0.0.1`)
+- `opensearch-dashboards` (port `5601`, tylko `127.0.0.1`; dostęp zdalny przez profil `nginx` lub `OPENSEARCH_BIND_ADDRESS` / `KIBANA_BIND_ADDRESS`)
 - opcjonalnie `nginx` (profil `nginx`, porty `80` i `443`)
 
 ## Start OpenSearch
